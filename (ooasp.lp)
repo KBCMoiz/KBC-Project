@@ -1,0 +1,30 @@
+% ooasp.lp
+
+% Define classes, attributes, and relationships
+class(person).
+class(address).
+
+attribute(person, name).
+attribute(person, age).
+attribute(address, city).
+
+relationship(has_address, person, address).
+
+% Define instantiation rules based on partial instantiation
+instantiated(name, "John"). % Example partial instantiation
+instantiated(age, 25).
+
+% Rules to complete the instantiation
+instantiated(Attribute, Value) :-
+    attribute(Class, Attribute),
+    class(Class),
+    not instantiated(Attribute, _),
+    default_value(Attribute, DefaultValue),
+    not instantiated(Attribute, DefaultValue),
+    assert(instantiated(Attribute, DefaultValue)).
+
+% Define output format predicates (adjust as per Table 2)
+output_predicate(Attribute, Value) :-
+    instantiated(Attribute, Value).
+
+% Additional rules and constraints as needed
